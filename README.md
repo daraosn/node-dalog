@@ -1,0 +1,2 @@
+# node-dalog
+Simple Logger
