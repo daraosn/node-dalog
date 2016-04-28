@@ -1,6 +1,6 @@
 {
   "name": "dalog",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simple logger for node.js",
   "main": "dist/Logger.js",
   "scripts": {
