@@ -69,6 +69,7 @@ var Logger = function () {
     value: function _print(consoleMethod, args) {
       var caller = new Error().stack.split('\n')[3];
       caller = !caller ? 'Unknown' : caller.replace(/^\s+at\s/, '').replace(/.+\((.*)\)/, '$1');
+      caller = caller.split('/').pop();
       args.unshift('[' + this._hash + '](' + caller + ')');
       consoleMethod.apply(console, args);
     }

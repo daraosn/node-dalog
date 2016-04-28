@@ -2,7 +2,7 @@
   "name": "dalog",
   "version": "1.0.0",
   "description": "Simple logger for node.js",
-  "main": "dist/logger.js",
+  "main": "dist/Logger.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
