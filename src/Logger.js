@@ -2,14 +2,16 @@ import Crypto from 'crypto';
 
 export default
 class Logger {
-  constructor(options) {
+  constructor(options = { debug: false }) {
     let md5 = Crypto.createHash('md5');
     let hash = md5.update(""+Math.random());
     this._hash = hash.digest('hex').slice(0, 8);
+    this._options = options;
   }
 
-  spawn() {
-    return new Logger();
+  spawn(options = {}) {
+    options = Object.assign(this._options, options);
+    return new Logger(options);
   }
 
   log(...args) {
@@ -26,6 +28,13 @@ class Logger {
 
   warn(...args) {
     this._print(console.warn, args);
+  }
+
+  debug(...args) {
+    // NOTE: console.debug is deprecated, but we will wrap it for our purposes by enabling a flag on constructor
+    // LINK: https://developer.mozilla.org/en-US/docs/Web/API/Console
+    if(!this._options.debug) return;
+    this._print(console.log, args);
   }
 
   _print(consoleMethod, args) {

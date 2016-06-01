@@ -15,18 +15,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Logger = function () {
-  function Logger(options) {
+  function Logger() {
+    var options = arguments.length <= 0 || arguments[0] === undefined ? { debug: false } : arguments[0];
+
     _classCallCheck(this, Logger);
 
     var md5 = _crypto2.default.createHash('md5');
     var hash = md5.update("" + Math.random());
     this._hash = hash.digest('hex').slice(0, 8);
+    this._options = options;
   }
 
   _createClass(Logger, [{
     key: 'spawn',
     value: function spawn() {
-      return new Logger();
+      var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+
+      options = Object.assign(this._options, options);
+      return new Logger(options);
     }
   }, {
     key: 'log',
@@ -63,6 +69,19 @@ var Logger = function () {
       }
 
       this._print(console.warn, args);
+    }
+  }, {
+    key: 'debug',
+    value: function debug() {
+      // NOTE: console.debug is deprecated, but we will wrap it for our purposes by enabling a flag on constructor
+      // LINK: https://developer.mozilla.org/en-US/docs/Web/API/Console
+      if (!this._options.debug) return;
+
+      for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+        args[_key5] = arguments[_key5];
+      }
+
+      this._print(console.log, args);
     }
   }, {
     key: '_print',
